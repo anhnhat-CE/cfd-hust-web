@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFD@HUST - Nền tảng tự động hóa mô phỏng OpenFOAM</title>
+    
+    <!-- Tailwind CSS qua CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6', // blue-500
+                        primaryHover: '#2563eb', // blue-600
+                        accent: '#f97316', // orange-500
+                        accentHover: '#ea580c', // orange-600
+                        dark: '#0f172a', // slate-900
+                        darker: '#020617', // slate-950
+                        card: '#1e293b', // slate-800
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome cho Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-darker text-slate-300 antialiased selection:bg-primary selection:text-white">
+
+    <!-- 1. Header (Thanh điều hướng) -->
+    <header class="fixed w-full top-0 z-50 bg-darker/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold text-white tracking-tight hover:opacity-80 transition">
+                        <span class="text-primary">CFD</span>@HUST
+                    </a>
+                </div>
+                
+                <!-- Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-sm font-medium text-slate-300 hover:text-white hover:text-primary transition duration-300">Features</a>
+                    <a href="#modules" class="text-sm font-medium text-slate-300 hover:text-white hover:text-primary transition duration-300">Modules</a>
+                    <a href="./docs/User_Guide.pdf" target="_blank" class="text-sm font-medium text-slate-300 hover:text-white hover:text-primary transition duration-300">Documentation</a>
+                </nav>
+
+                <!-- Download Button -->
+                <div class="hidden md:flex items-center">
+                    <a href="./downloads/CFD@HUST.zip" download class="bg-primary hover:bg-primaryHover text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50">
+                        Download Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section (Phần màn hình chính) -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Glow Effects -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+            <div class="absolute top-20 left-10 w-96 h-96 bg-primary rounded-full mix-blend-screen filter blur-[128px] opacity-20"></div>
+            <div class="absolute top-40 right-10 w-96 h-96 bg-accent rounded-full mix-blend-screen filter blur-[128px] opacity-20"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <!-- Tiêu đề chính -->
+            <h1 data-aos="fade-down" class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-accent">CFD@HUST</span><br>
+                Nền tảng tự động hóa mô phỏng OpenFOAM
+            </h1>
+            
+            <!-- Tiêu đề phụ -->
+            <p data-aos="fade-down" class="mt-4 text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">
+                Phần mềm giao diện đồ họa (GUI) toàn diện tích hợp bộ giải OpenFOAM, được phát triển trên nền tảng Python, PyQt6 và PyVista. Tối ưu hóa quy trình từ nạp hình học, chia lưới, chạy tính toán đến hậu xử lý 3D.
+            </p>
+            
+            <!-- Nút CTA -->
+            <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+                <!-- Nút 1 (Primary) -->
+                <a href="./downloads/CFD@HUST.zip" download class="w-full sm:w-auto flex items-center justify-center gap-3 bg-primary hover:bg-primaryHover text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50">
+                    <i class="fa-solid fa-download"></i>
+                    Tải phần mềm (Phiên bản 1.0.0)
+                </a>
+                <!-- Nút 2 (Secondary) -->
+                <a href="./docs/User_Guide.pdf" target="_blank" class="w-full sm:w-auto flex items-center justify-center gap-3 bg-card hover:bg-slate-700 text-white border border-slate-700 hover:border-slate-500 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50">
+                    <i class="fa-solid fa-book"></i>
+                    Xem hướng dẫn sử dụng
+                </a>
+            </div>
+
+            <!-- Ảnh chụp màn hình phần mềm -->
+            <div data-aos="zoom-in" data-aos-delay="400" class="max-w-6xl mx-auto w-full p-4 mt-10 relative group cursor-pointer">
+                <!-- Glossy overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-darker via-transparent to-transparent z-10 rounded-xl pointer-events-none opacity-80 group-hover:opacity-60 transition duration-500"></div>
+                <img src="./assets/images/GUI.png" alt="Hero Screenshot" class="w-full h-auto object-contain rounded-xl shadow-2xl border border-gray-700/50 relative z-20 group-hover:scale-105 transition duration-500">
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Modules Section (Phân hệ cốt lõi) -->
+    <section id="modules" class="py-24 bg-dark border-y border-slate-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 data-aos="fade-right" class="text-3xl md:text-4xl font-bold text-white mb-4">Phân hệ Cốt lõi</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-400 max-w-2xl mx-auto text-lg">Hệ thống được module hóa cao, cung cấp các bộ công cụ chuyên dụng cho từng lĩnh vực mô phỏng khác nhau.</p>
+            </div>
+
+            <!-- CSS Grid cho 4 thẻ -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Thẻ 1: Wind Tunnel -->
+                <div data-aos="fade-up" data-aos-delay="100" class="bg-card rounded-2xl p-8 border border-slate-700/50 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-400 cursor-pointer group shadow-lg">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition duration-300">
+                        <i class="fa-solid fa-wind text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition duration-300">Wind Tunnel</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">
+                        Tối ưu hóa khí động học ô tô và mô hình. Hỗ trợ chia lưới snappyHexMesh, RANS/LES.
+                    </p>
+                </div>
+
+                <!-- Thẻ 2: Towing Tank -->
+                <div data-aos="fade-up" data-aos-delay="200" class="bg-card rounded-2xl p-8 border border-slate-700/50 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-400 cursor-pointer group shadow-lg">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent/20 transition duration-300">
+                        <i class="fa-solid fa-water text-2xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-accent transition duration-300">Towing Tank</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">
+                        Mô phỏng thủy động lực học, tính toán đa pha (multiphase) bằng interFoam, hỗ trợ động lực học 6-DoF và tạo sóng.
+                    </p>
+                </div>
+
+                <!-- Thẻ 3: Airfoil -->
+                <div data-aos="fade-up" data-aos-delay="300" class="bg-card rounded-2xl p-8 border border-slate-700/50 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-400 cursor-pointer group shadow-lg">
+                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition duration-300">
+                        <i class="fa-solid fa-plane-up text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition duration-300">Airfoil</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">
+                        Phân tích khí động học siêu âm cánh máy bay sử dụng bộ giải rhoCentralFoam và chia lưới blockMesh đối xứng.
+                    </p>
+                </div>
+
+                <!-- Thẻ 4: Custom Module -->
+                <div data-aos="fade-up" data-aos-delay="400" class="bg-card rounded-2xl p-8 border border-slate-700/50 hover:bg-slate-800 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-blue-400 cursor-pointer group shadow-lg">
+                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent/20 transition duration-300">
+                        <i class="fa-solid fa-gears text-2xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-accent transition duration-300">Custom Module</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">
+                        Môi trường tùy biến đa dụng, cho phép tự do xây dựng hệ thống lưới động, đồng bộ điều kiện biên thông minh và thiết lập chuyên sâu.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Features/Highlights (Tính năng nổi bật) -->
+    <section id="features" class="py-24 bg-darker relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <!-- Text Content -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Tính năng Nổi bật</h2>
+                    <p class="text-slate-400 text-lg mb-10 leading-relaxed">
+                        Thiết kế hướng tới trải nghiệm người dùng tối ưu, CFD@HUST rút ngắn khoảng cách giữa nhà nghiên cứu và sức mạnh tính toán của OpenFOAM.
+                    </p>
+                    
+                    <div data-aos="fade-left" data-aos-delay="200" class="space-y-8">
+                        <!-- Điểm mạnh 1 -->
+                        <div class="flex gap-4 group cursor-default">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:border-primary group-hover:bg-primary/10 transition duration-300 shadow-md">
+                                    <i class="fa-solid fa-folder-tree text-primary text-lg"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1 group-hover:text-primary transition duration-300">Quản lý dự án chuẩn cấu trúc</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Tổ chức thư mục OpenFOAM chuẩn mực (0, constant, system). Dễ dàng kiểm soát file từ điển và cấu hình.</p>
+                            </div>
+                        </div>
+
+                        <!-- Điểm mạnh 2 -->
+                        <div class="flex gap-4 group cursor-default">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:border-accent group-hover:bg-accent/10 transition duration-300 shadow-md">
+                                    <i class="fa-solid fa-chart-line text-accent text-lg"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1 group-hover:text-accent transition duration-300">Hậu xử lý trực tiếp</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Hiển thị biểu đồ Live Residuals theo thời gian thực và tích hợp module 3D Scene Rendering mạnh mẽ từ PyVista.</p>
+                            </div>
+                        </div>
+
+                        <!-- Điểm mạnh 3 -->
+                        <div class="flex gap-4 group cursor-default">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:border-primary group-hover:bg-primary/10 transition duration-300 shadow-md">
+                                    <i class="fa-solid fa-robot text-primary text-lg"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1 group-hover:text-primary transition duration-300">Tích hợp Trợ lý AI</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Phân tích file log thông minh, tự động nhận diện điểm bất thường và cung cấp gợi ý gỡ lỗi nhanh chóng.</p>
+                            </div>
+                        </div>
+
+                        <!-- Điểm mạnh 4 -->
+                        <div class="flex gap-4 group cursor-default">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center border border-slate-700 group-hover:border-accent group-hover:bg-accent/10 transition duration-300 shadow-md">
+                                    <i class="fa-brands fa-linux text-accent text-lg"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-white mb-1 group-hover:text-accent transition duration-300">Kiến trúc độc lập qua WSL</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Giao tiếp mượt mà với lõi tính toán Linux thông qua Windows Subsystem for Linux (WSL), loại bỏ rào cản hệ điều hành.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Illustration Graphic -->
+                <div class="lg:w-1/2 w-full">
+                    <div class="relative w-full aspect-square md:aspect-[4/3] lg:aspect-square bg-card border border-slate-700/50 rounded-2xl flex items-center justify-center overflow-hidden group shadow-2xl">
+                        <!-- Abstract glowing shapes -->
+                        <div class="absolute w-[120%] h-[120%] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+CjxwYXRoIGQ9Ik0wIDBoNDB2NDBIMHoiIGZpbGw9Im5vbmUiLz4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpIi8+Cjwvc3ZnPg==')] opacity-50"></div>
+                        <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[80px] group-hover:bg-primary/40 transition duration-700 group-hover:scale-110"></div>
+                        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-[80px] group-hover:bg-accent/40 transition duration-700 group-hover:scale-110"></div>
+                        
+                        <div class="relative z-10 text-center text-slate-500">
+                            <i class="fa-solid fa-layer-group text-8xl mb-6 opacity-40 group-hover:scale-110 group-hover:text-white transition duration-500"></i>
+                            <h3 class="text-xl font-medium text-slate-400 group-hover:text-white transition duration-300">Kiến trúc Tối ưu</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Footer (Chân trang) -->
+    <footer class="bg-darker pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <a href="#" class="text-2xl font-bold text-white tracking-tight">
+                        <span class="text-primary">CFD</span>@HUST
+                    </a>
+                    <p class="text-slate-500 text-sm mt-2 max-w-xs">Nền tảng giao diện đồ họa toàn diện cho cộng đồng mô phỏng OpenFOAM.</p>
+                </div>
+                
+                <div class="flex space-x-5">
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg transition duration-300">
+                        <i class="fa-brands fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg transition duration-300">
+                        <i class="fa-solid fa-envelope text-xl"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:shadow-lg transition duration-300">
+                        <i class="fa-brands fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+                <p>&copy; 2026 CFD@HUST. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0 font-medium">
+                    <a href="#" class="hover:text-primary transition duration-300">GitHub Repository</a>
+                    <a href="#" class="hover:text-primary transition duration-300">Liên hệ hỗ trợ</a>
+                    <a href="#" class="hover:text-primary transition duration-300">Chính sách bảo mật</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html>
